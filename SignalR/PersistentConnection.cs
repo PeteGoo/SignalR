@@ -82,7 +82,7 @@ namespace SignalR
             private set;
         }
 
-        private string DefaultSignal
+        protected string DefaultSignal
         {
             get
             {

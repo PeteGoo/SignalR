@@ -63,7 +63,7 @@ namespace SignalR
             return SendMessage(signal, value);
         }
 
-        public Task<PersistentResponse> ReceiveAsync(CancellationToken timeoutToken)
+        public virtual Task<PersistentResponse> ReceiveAsync(CancellationToken timeoutToken)
         {
             Trace.TraceInformation("Waiting for new messages");
 
@@ -71,7 +71,7 @@ namespace SignalR
                               .Then(result => GetResponse(result));
         }
 
-        public Task<PersistentResponse> ReceiveAsync(string messageId, CancellationToken timeoutToken)
+        public virtual Task<PersistentResponse> ReceiveAsync(string messageId, CancellationToken timeoutToken)
         {
             Trace.TraceInformation("Waiting for messages from {0}.", messageId);
 
@@ -79,7 +79,7 @@ namespace SignalR
                               .Then(result => GetResponse(result));
         }
 
-        public Task SendCommand(SignalCommand command)
+        public virtual Task SendCommand(SignalCommand command)
         {
             return SendMessage(SignalCommand.AddCommandSuffix(_connectionId), command);
         }
@@ -104,7 +104,7 @@ namespace SignalR
             return response;
         }
 
-        private List<object> ProcessResults(IList<Message> source)
+        protected virtual List<object> ProcessResults(IList<Message> source)
         {
             var messageValues = new List<object>();
             foreach (var message in source)
